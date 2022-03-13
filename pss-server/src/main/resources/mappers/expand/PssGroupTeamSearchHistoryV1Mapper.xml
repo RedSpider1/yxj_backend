@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.expand.PssGroupTeamSearchHistoryV1Mapper">
+
+    <sql id="cols">
+        id,create_time,update_time,creator_id,updater_id,deleted,keyword
+    </sql>
+
+    <insert id="insert" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into pss_group_team_search_history(creator_id,updater_id,keyword)
+        values (#{historyDO.creatorId},#{historyDO.updaterId},#{historyDO.keyword})
+    </insert>
+
+    <select id="queryList" resultType="com.redspider.pss.domain.PssGroupTeamSearchHistoryDO">
+        select
+            id,
+            create_time as createTime,
+            update_time as updateTime,
+            creator_id as creatorId,
+            updater_id as updaterId,
+            deleted,
+            keyword
+        from pss_group_team_search_history
+        where deleted = 0
+        <if test="query != null and query.keyword != null">
+            <if test="query.keyword.creatorId != null and query.keyword.creatorId != ''">
+                and creator_id = #{query.keyword.creatorId}
+            </if>
+            <if test="query.keyword != null and query.keyword.keyword != null and query.keyword.keyword != ''">
+                and keyword = #{query.keyword.keyword}
+            </if>
+        </if>
+        order by id desc
+        limit #{query.offset},#{query.pageSize}
+    </select>
+    <select id="count" resultType="int">
+        select count(0)
+        from pss_group_team_search_history
+        where deleted = 0
+        <if test="query != null and query.keyword != null">
+            <if test="query.keyword.creatorId != null and query.keyword.creatorId != ''">
+                and creator_id = #{query.keyword.creatorId}
+            </if>
+            <if test="query.keyword != null and query.keyword.keyword != null and query.keyword.keyword != ''">
+                and keyword = #{query.keyword.keyword}
+            </if>
+        </if>
+    </select>
+
+    <update id="removeHistory">
+        update pss_group_team_search_history
+        set deleted = 1
+        where creator_id = #{userId}
+        <if test="keywords != null and keywords.size != 0">
+            and keyword in
+            <foreach collection="keywords" index="index" item="word" open="(" close=")">
+                #{word}
+            </foreach>
+        </if>
+    </update>
+</mapper>

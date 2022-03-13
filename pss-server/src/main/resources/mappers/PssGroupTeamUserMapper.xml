@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.PssGroupTeamUserMapper">
+  <resultMap id="BaseResultMap" type="com.redspider.pss.repository.db.entity.PssGroupTeamUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="group_team_id" jdbcType="BIGINT" property="groupTeamId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="updater_id" jdbcType="BIGINT" property="updaterId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+    <result column="contact_information" jdbcType="VARCHAR" property="contactInformation" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, group_team_id, user_id, status, creator_id, updater_id, create_time, update_time, 
+    deleted, contact_information, type, remarks
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pss_group_team_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pss_group_team_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeamUser">
+    insert into pss_group_team_user (id, group_team_id, user_id, 
+      status, creator_id, updater_id, 
+      create_time, update_time, deleted, 
+      contact_information, type, remarks
+      )
+    values (#{id,jdbcType=BIGINT}, #{groupTeamId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER}, #{creatorId,jdbcType=BIGINT}, #{updaterId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT}, 
+      #{contactInformation,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{remarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeamUser">
+    insert into pss_group_team_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="groupTeamId != null">
+        group_team_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="updaterId != null">
+        updater_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="contactInformation != null">
+        contact_information,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="groupTeamId != null">
+        #{groupTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="updaterId != null">
+        #{updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="contactInformation != null">
+        #{contactInformation,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeamUser">
+    update pss_group_team_user
+    <set>
+      <if test="groupTeamId != null">
+        group_team_id = #{groupTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="updaterId != null">
+        updater_id = #{updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="contactInformation != null">
+        contact_information = #{contactInformation,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeamUser">
+    update pss_group_team_user
+    set group_team_id = #{groupTeamId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      updater_id = #{updaterId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=TINYINT},
+      contact_information = #{contactInformation,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

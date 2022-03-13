@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.ResourceMapper">
+
+    <resultMap id="BaseResultMap" type="com.redspider.pss.repository.db.entity.Resource">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="ossKey" column="oss_key" jdbcType="VARCHAR"/>
+            <result property="path" column="path" jdbcType="VARCHAR"/>
+            <result property="creatorId" column="creator_id" jdbcType="BIGINT"/>
+            <result property="updaterId" column="updater_id" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,oss_key,
+        path,creator_id,updater_id,
+        create_time,update_time,deleted
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from resource
+        where  id = #{id,jdbcType=BIGINT} 
+    </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from resource
+        where  id = #{id,jdbcType=BIGINT} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.redspider.pss.repository.db.entity.Resource" useGeneratedKeys="true">
+        insert into resource
+        ( id,name,oss_key
+        ,path,creator_id,updater_id
+        ,create_time,update_time,deleted
+        )
+        values (#{id,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{ossKey,jdbcType=VARCHAR}
+        ,#{path,jdbcType=VARCHAR},#{creatorId,jdbcType=BIGINT},#{updaterId,jdbcType=BIGINT}
+        ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{deleted,jdbcType=TINYINT}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.redspider.pss.repository.db.entity.Resource"
+      useGeneratedKeys="true">
+        insert into resource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="name != null">name,</if>
+                <if test="ossKey != null">oss_key,</if>
+                <if test="path != null">path,</if>
+                <if test="creatorId != null">creator_id,</if>
+                <if test="updaterId != null">updater_id,</if>
+                <if test="createTime != null">create_time,</if>
+                <if test="updateTime != null">update_time,</if>
+                <if test="deleted != null">deleted,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id,jdbcType=BIGINT},</if>
+                <if test="name != null">#{name,jdbcType=VARCHAR},</if>
+                <if test="ossKey != null">#{ossKey,jdbcType=VARCHAR},</if>
+                <if test="path != null">#{path,jdbcType=VARCHAR},</if>
+                <if test="creatorId != null">#{creatorId,jdbcType=BIGINT},</if>
+                <if test="updaterId != null">#{updaterId,jdbcType=BIGINT},</if>
+                <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+                <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+                <if test="deleted != null">#{deleted,jdbcType=TINYINT},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.redspider.pss.repository.db.entity.Resource">
+        update resource
+        <set>
+                <if test="name != null">
+                    name = #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="ossKey != null">
+                    oss_key = #{ossKey,jdbcType=VARCHAR},
+                </if>
+                <if test="path != null">
+                    path = #{path,jdbcType=VARCHAR},
+                </if>
+                <if test="creatorId != null">
+                    creator_id = #{creatorId,jdbcType=BIGINT},
+                </if>
+                <if test="updaterId != null">
+                    updater_id = #{updaterId,jdbcType=BIGINT},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="deleted != null">
+                    deleted = #{deleted,jdbcType=TINYINT},
+                </if>
+        </set>
+        where   id = #{id,jdbcType=BIGINT} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.redspider.pss.repository.db.entity.Resource">
+        update resource
+        set 
+            name =  #{name,jdbcType=VARCHAR},
+            oss_key =  #{ossKey,jdbcType=VARCHAR},
+            path =  #{path,jdbcType=VARCHAR},
+            creator_id =  #{creatorId,jdbcType=BIGINT},
+            updater_id =  #{updaterId,jdbcType=BIGINT},
+            create_time =  #{createTime,jdbcType=TIMESTAMP},
+            update_time =  #{updateTime,jdbcType=TIMESTAMP},
+            deleted =  #{deleted,jdbcType=TINYINT}
+        where   id = #{id,jdbcType=BIGINT} 
+    </update>
+</mapper>

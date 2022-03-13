@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.expand.PssGroupTeamLableV1Mapper">
+
+  <resultMap id="BaseResultMap" type="com.redspider.pss.domain.PssGroupTeamLable">
+    <id property="id" column="id" jdbcType="BIGINT"/>
+    <result property="groupTeamId" column="group_team_id" jdbcType="BIGINT"/>
+    <result property="labelId" column="label_id" jdbcType="BIGINT"/>
+    <result property="creatorId" column="creator_id" jdbcType="BIGINT"/>
+    <result property="updaterId" column="updater_id" jdbcType="BIGINT"/>
+    <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id,group_team_id
+    ,label_id,creator_id,
+        updater_id,create_time,update_time,
+        deleted
+  </sql>
+
+  <update id="deleteByLabelId">
+    update pss_group_team_lable
+    set deleted   = 1,
+        updater_id=#{updaterId}
+    where label_id = #{labelId}
+  </update>
+</mapper>

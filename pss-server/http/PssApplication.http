@@ -1,0 +1,176 @@
+###
+POST {{host}}/groupTeam/saveTeam
+Content-Type: application/json
+Authorization: {{token}}
+Accept: application/json
+
+{
+  "id": null,
+  "title": "测试人数2",
+  "pictureUrlArray": null,
+  "labelIdArray": null,
+  "introduce": "我",
+  "expireTime": "2121-08-15 22:50:52",
+  "examineTime": "2021-08-15 22:50:52",
+  "minTeamSize": 1,
+  "maxTeamSize": 1,
+  "province": "",
+  "city": "",
+  "area": "",
+  "place": "",
+  "lon": "",
+  "lat": "",
+  "releaseStatus": 1,
+  "teamStatus": 1,
+  "confirmStatus": 0,
+  "createTime": "2021-08-15 22:50:52",
+  "creatorId": 11,
+  "createName": "admin",
+  "currentJoinNum": 0,
+  "needNum": 1
+}
+
+###
+POST {{host}}/wx/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "jsCode": "0410SF000UYLqM127d100e1Fci00SF0R"
+}
+
+###
+POST {{host}}/user/session
+Content-Type: application/json
+Accept: application/json
+
+{
+  "phone": "18829268328",
+  "verificationCode": "1234"
+}
+
+###
+POST {{host}}/wx/phone
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI0NyIsInN1YiI6IueUqOaIt3IzQjBkQ0RHMVQwIiwiaWF0IjoxNjMxNjE3MDk3LCJleHAiOjE2MzE3MDM0OTcsInVzZXJJZCI6NDd9.whnJmo38lVa2zqOd0Z2i9wwbLq_rtJMQvpv7vbzWNZ-xy4UBtIoo__94xuI5_NQNLvfI73bpWcu0yd7LiOTEVw
+
+{
+  "sessionKey": "String",
+  "encryptedData": "String",
+  "iv": "String",
+  "cloudId": "String"
+}
+
+###
+POST {{host}}/wx/phone
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI0NyIsInN1YiI6IueUqOaIt3IzQjBkQ0RHMVQwIiwiaWF0IjoxNjMxNjE3MDk3LCJleHAiOjE2MzE3MDM0OTcsInVzZXJJZCI6NDd9.whnJmo38lVa2zqOd0Z2i9wwbLq_rtJMQvpv7vbzWNZ-xy4UBtIoo__94xuI5_NQNLvfI73bpWcu0yd7LiOTEVw
+
+{
+  "sessionKey": "String",
+  "encryptedData": "String",
+  "iv": "String",
+  "cloudId": "String"
+}
+
+###
+POST {{host}}/pss/group
+Content-Type: application/json
+Accept: application/json
+Authorization: {{token}}
+
+{
+  "title": "测试数据4-Tony",
+  "introduction": "测试介绍",
+  "startTime": 1633136901879,
+  "endTime": 1633947943429,
+  "contactType": 1,
+  "contactInfo": "18829268328",
+  "containMe": 0,
+  "condition": {
+    "minTeamSize": 2,
+    "maxTeamSize": 2
+  },
+  "resourceList": [
+    "27","26"
+  ],
+  "labels": [
+    "测试标签3"
+  ]
+}
+
+###
+PUT {{host}}/pss/group/id/18
+Content-Type: application/json
+Accept: application/json
+Authorization: {{token}}
+
+{
+  "title": "测试数据3",
+  "introduction": "测试介绍",
+  "startTime": 1633136901879,
+  "endTime": 1633947943429,
+  "contactType": 1,
+  "contactInfo": "18829268328",
+  "containMe": 1,
+  "condition": {
+    "minTeamSize": 1,
+    "maxTeamSize": 1
+  },
+  "resourceList": [
+    {
+      "name": "测试资源",
+      "path": "202110/15/DFABDC3B61C1.jpg"
+    }
+  ],
+  "labels": [
+    "测试标签3"
+  ]
+}
+
+###
+GET {{host}}/pss/group/id/51
+Accept: application/json
+Authorization: {{token}}
+
+###
+GET {{host}}/pss/label/list
+Accept: application/json
+Authorization: {{token}}
+
+###
+DELETE {{host}}/pss/label/13
+Accept: application/json
+Authorization: {{token}}
+
+###
+POST {{host}}/pss/label
+Accept: application/json
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "labelName": "测试标签555"
+}
+
+###
+GET {{host}}/groupTeam/search/label?pageNum=2&pageSize=5
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{host}}/pss/group/attendees/78
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+POST {{host}}/pss/group/involveList
+Accept: application/json
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": 30
+}

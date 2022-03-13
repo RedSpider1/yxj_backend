@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.RemarkMapper">
+
+  <select id="selectListByBizType" parameterType="int" resultType="com.redspider.pss.vo.team.RemarkInfoVO">
+        SELECT
+        	`biz_id`, `biz_type`, count( `biz_id` ) AS count
+		FROM
+			remark
+		WHERE
+			biz_type = #{bizType}
+			AND dispose_status = 0
+			AND deleted = 1
+		GROUP BY
+			biz_id
+		ORDER BY
+			count DESC
+  </select>
+</mapper>

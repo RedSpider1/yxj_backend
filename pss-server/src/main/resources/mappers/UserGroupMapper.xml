@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.UserGroupMapper">
+  <resultMap id="BaseResultMap" type="com.redspider.pss.repository.db.entity.UserGroup">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="group_id" jdbcType="BIGINT" property="groupId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="delete" jdbcType="TINYINT" property="delete" />
+    <result column="contract_type" jdbcType="TINYINT" property="contractType" />
+    <result column="contract_info" jdbcType="VARCHAR" property="contractInfo" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.redspider.pss.repository.db.entity.UserGroup">
+    <result column="resource_ids" jdbcType="LONGVARCHAR" property="resourceIds" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, group_id, user_id, delete, contract_type, contract_info, comment, create_time, 
+    update_time
+  </sql>
+  <sql id="Blob_Column_List">
+    resource_ids
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_group
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_group
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.redspider.pss.repository.db.entity.UserGroup">
+    insert into user_group (id, group_id, user_id, 
+      delete, contract_type, contract_info, 
+      comment, create_time, update_time, 
+      resource_ids)
+    values (#{id,jdbcType=BIGINT}, #{groupId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{delete,jdbcType=TINYINT}, #{contractType,jdbcType=TINYINT}, #{contractInfo,jdbcType=VARCHAR}, 
+      #{comment,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{resourceIds,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.redspider.pss.repository.db.entity.UserGroup">
+    insert into user_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="delete != null">
+        delete,
+      </if>
+      <if test="contractType != null">
+        contract_type,
+      </if>
+      <if test="contractInfo != null">
+        contract_info,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="resourceIds != null">
+        resource_ids,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="delete != null">
+        #{delete,jdbcType=TINYINT},
+      </if>
+      <if test="contractType != null">
+        #{contractType,jdbcType=TINYINT},
+      </if>
+      <if test="contractInfo != null">
+        #{contractInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resourceIds != null">
+        #{resourceIds,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.redspider.pss.repository.db.entity.UserGroup">
+    update user_group
+    <set>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="delete != null">
+        delete = #{delete,jdbcType=TINYINT},
+      </if>
+      <if test="contractType != null">
+        contract_type = #{contractType,jdbcType=TINYINT},
+      </if>
+      <if test="contractInfo != null">
+        contract_info = #{contractInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resourceIds != null">
+        resource_ids = #{resourceIds,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.redspider.pss.repository.db.entity.UserGroup">
+    update user_group
+    set group_id = #{groupId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      delete = #{delete,jdbcType=TINYINT},
+      contract_type = #{contractType,jdbcType=TINYINT},
+      contract_info = #{contractInfo,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      resource_ids = #{resourceIds,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.redspider.pss.repository.db.entity.UserGroup">
+    update user_group
+    set group_id = #{groupId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      delete = #{delete,jdbcType=TINYINT},
+      contract_type = #{contractType,jdbcType=TINYINT},
+      contract_info = #{contractInfo,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="deleteByUserIdAndGroupId" parameterType="com.redspider.pss.repository.db.entity.UserGroup">
+    update user_group
+    set
+      `delete` = 1
+    where group_id = #{groupId,jdbcType=BIGINT}
+      and user_id = #{userId,jdbcType=BIGINT}
+       and `delete` = 0
+  </update>
+</mapper>

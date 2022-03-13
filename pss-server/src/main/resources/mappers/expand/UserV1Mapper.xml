@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.expand.UserV1Mapper">
+
+    <resultMap id="UserDO" type="com.redspider.pss.domain.user.UserDO">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="phone" column="phone"/>
+        <result property="wechatNum" column="wechat_num"/>
+        <result property="email" column="email"/>
+        <result property="slogan" column="slogan"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="avatar" column="avatar"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <sql id="base_field">
+        `id`, `name`, password, phone, email, create_time, update_time
+    </sql>
+
+    <select id="selectByPhone" resultMap="UserDO">
+        select *
+        from user_basic
+        where phone = #{phoneNumber};
+    </select>
+
+    <select id="selectById" resultMap="UserDO">
+        select
+            id,
+            name,
+            phone,
+            wechat_num,
+            email,
+            slogan,
+            birthday,
+            sex,
+            avatar,
+            create_time,
+            update_time
+        from user_basic
+        where id = #{id}
+    </select>
+
+    <select id="selectByIds" resultType="com.redspider.pss.domain.user.UserDO">
+        select
+            id,
+            name,
+            phone,
+            wechat_num,
+            email,
+            slogan,
+            birthday,
+            sex,
+            avatar,
+            create_time,
+            update_time
+        from user_basic
+        where id IN
+        <foreach collection="idList" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findSamePhone" resultType="java.lang.Integer">
+        SELECT
+            id
+        FROM
+            user_basic
+        WHERE
+            id != #{id}
+            AND
+            phone = #{phone}
+    </select>
+
+    <select id="findSameWechatNum" resultType="java.lang.String">
+        SELECT
+            id
+        FROM
+            user_basic
+        WHERE
+            id != #{id}
+            AND
+            wechat_num = #{wechatNum}
+    </select>
+
+    <update id="updateUserById" parameterType="com.redspider.pss.domain.user.UserDO">
+        UPDATE
+            user_basic
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="wechatNum != null and wechatNum != ''">
+                wechat_num = #{wechatNum},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                avatar = #{avatar},
+            </if>
+            <if test="slogan != null and slogan != ''">
+                slogan = #{slogan},
+            </if>
+            <if test="updaterId != null">
+                updater_id = #{id}
+            </if>
+        </set>
+        WHERE
+            id = #{id}
+
+    </update>
+
+    <update id="updatePhoneAndUpdaterIdById">
+        update user_basic set phone=#{phone}, updater_id=#{id} where id=#{id}
+    </update>
+
+    <insert id="insert" parameterType="com.redspider.pss.domain.user.UserDO" useGeneratedKeys="true" keyProperty="id">
+        insert
+        into user_basic(`name`, password, phone, email)
+        values (#{name},
+                #{password},
+                #{phone},
+                #{email});
+    </insert>
+</mapper>

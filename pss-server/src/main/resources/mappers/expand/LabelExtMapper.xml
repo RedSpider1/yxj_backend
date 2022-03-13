@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.expand.LabelExtMapper">
+
+  <select id="selectByLabel" resultMap="com.redspider.pss.mapper.LabelMapper.BaseResultMap">
+    select <include refid="com.redspider.pss.mapper.LabelMapper.Base_Column_List" />
+    from `label`
+    where label_name = #{labelName} limit 1
+  </select>
+  <select id="selectByIds" resultMap="com.redspider.pss.mapper.LabelMapper.BaseResultMap">
+    select <include refid="com.redspider.pss.mapper.LabelMapper.Base_Column_List" />
+    from `label`
+    where id in
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </select>
+  <select id="selectByLabelLike" resultMap="com.redspider.pss.mapper.LabelMapper.BaseResultMap">
+    select <include refid="com.redspider.pss.mapper.LabelMapper.Base_Column_List"/>
+    from `label`
+    where deleted = 0
+      <if test="labelName != null and labelName != ''">
+        and label_name like "%"#{labelName}"%"
+      </if>
+    limit 20
+  </select>
+</mapper>

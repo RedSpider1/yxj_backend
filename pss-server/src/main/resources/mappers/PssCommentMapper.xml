@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.PssCommentMapper">
+    <sql id="queryParam" >
+        pc.id,
+        pc.pid,
+        pc.relation_id,
+        pc.content,
+        pc.hide,
+        pc.replied_id,
+        pc.creator_id,
+        pc.create_time,
+        ub.name as commentator_name,
+        ub.avatar
+
+    </sql>
+    <update id="logicDeleteById">
+        update pss_comment
+        set hide   = 1,
+            where id= #{id}
+    </update>
+
+
+    <select id="getRootNodeByRelationId"  resultType="com.redspider.pss.vo.comment.PssCommentVO">
+        select
+        <include refid="queryParam"></include>
+        from  pss_comment pc
+        left join  user_basic  ub
+        on  pc.creator_id = ub.id
+        where pc.relation_id=#{id}
+        and pc.pid='0'
+        ORDER by pc.create_time DESC
+    </select>
+
+    <select id="getSubNodeListByRootId" resultType="com.redspider.pss.vo.comment.PssCommentVO" parameterType="java.util.List">
+        select * from (
+            select
+        <include refid="queryParam"></include>
+        ,row_number() over (partition by pc.pid order by pc.create_time desc) as country_rank
+        from  pss_comment pc
+        left join  user_basic  ub
+        on  pc.creator_id = ub.id
+        where pc.pid
+        in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="">
+            #{item}
+        </foreach>
+            ) ranks
+        where country_rank <![CDATA[ <= ]]> 10
+
+    </select>
+    <select id="getSubRepliedName" resultType="com.redspider.pss.vo.comment.PssCommentVO" parameterType="java.util.Set">
+        select
+        id as replied_id,
+        name as repliedName
+        from user_basic
+
+        where  id
+        in
+        <foreach item="item" collection="collection" separator="," open="(" close=")" index="">
+            #{item}
+        </foreach>
+
+    </select>
+    <select id="selectSubCommentByRootId"  resultType="com.redspider.pss.vo.comment.PssCommentVO" >
+        select
+        <include refid="queryParam"></include>
+        from  pss_comment pc
+        left join  user_basic  ub
+        on  pc.creator_id = ub.id
+        where
+        pc.pid=#{id}
+        ORDER by pc.create_time DESC
+    </select>
+
+    <select id="getSubNodeCountByRootId" resultType="com.redspider.pss.vo.comment.PssCommentVO" parameterType="java.util.List">
+        select count(*) as  subLen,pid
+
+        from  pss_comment
+        where pid
+        in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="">
+            #{item}
+        </foreach>
+        group by   pid
+
+    </select>
+</mapper>

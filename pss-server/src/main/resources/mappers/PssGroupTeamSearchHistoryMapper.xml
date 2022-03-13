@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.PssGroupTeamSearchHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.redspider.pss.repository.db.entity.PssGroupTeamSearchHistory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="updater_id" jdbcType="INTEGER" property="updaterId" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+    <result column="keyword" jdbcType="VARCHAR" property="keyword" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, update_time, creator_id, updater_id, deleted, keyword
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pss_group_team_search_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pss_group_team_search_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeamSearchHistory">
+    insert into pss_group_team_search_history (id, create_time, update_time, 
+      creator_id, updater_id, deleted, 
+      keyword)
+    values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{creatorId,jdbcType=INTEGER}, #{updaterId,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT}, 
+      #{keyword,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeamSearchHistory">
+    insert into pss_group_team_search_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="updaterId != null">
+        updater_id,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="keyword != null">
+        keyword,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="updaterId != null">
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="keyword != null">
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeamSearchHistory">
+    update pss_group_team_search_history
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="updaterId != null">
+        updater_id = #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="keyword != null">
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeamSearchHistory">
+    update pss_group_team_search_history
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      updater_id = #{updaterId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=TINYINT},
+      keyword = #{keyword,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

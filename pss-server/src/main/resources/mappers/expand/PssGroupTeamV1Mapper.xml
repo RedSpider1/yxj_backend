@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.expand.PssGroupTeamV1Mapper">
+
+
+    <sql id="queryParam">
+        pgt.id 'id',
+        pgt.title 'title',
+        pgt.picture_url 'pictureUrl',
+        pgt.introduce 'introduce',
+        pgt.examine_time 'examineTime',
+        pgt.expire_time 'expireTime',
+        pgt.min_team_size 'minTeamSize',
+        pgt.max_team_size 'maxTeamSize',
+        pgt.province 'province',
+        pgt.city 'city',
+        pgt.area 'area',
+        pgt.place'place',
+        pgt.lon 'lon',
+        pgt.lat 'lat',
+        pgt.release_status 'releaseStatus',
+        pgt.team_status 'teamStatus',
+        pgt.confirm_status 'confirmStatus',
+        pgt.examine_type 'examineType',
+        pgt.examine_user 'examineUser',
+        pgt.examine_status 'examineStatus',
+        pgt.start_time 'startTime',
+        pgt.examine_msg 'examineMsg',
+        pgt.creator_id  'creatorId',
+        pgt.create_time 'createTime',
+        pgt.update_time 'updateTime',
+        pgt.deleted 'deleted',
+        ub.name 'createName',
+        pgt.contain_me containMe
+    </sql>
+    <sql id="groupTempJoinNum">
+        with count_join_persion as (
+        select pgt.id as group_id, count(1) as count_join_num
+        from pss_group_team pgt
+        left join pss_group_team_user pgtu on pgt.id = pgtu.group_team_id
+        left join user_basic ub on pgtu.user_id = ub.id
+        where pgt.deleted = 0
+        and pgtu.deleted = 0
+        and pgtu.status != 2
+        group by pgt.id
+        )
+    </sql>
+    <insert id="insertViewedGroups">
+        REPLACE INTO pss_group_team_viewed
+        (`user_id`, `group_team_id` , `create_time`, `update_time`, `deleted`)
+        VALUES
+        (#{userId},#{groupId},now(),now(),0);
+    </insert>
+    <update id="deleteViewedGroups">
+        update pss_group_team_viewed set deleted = 1 where group_team_id = #{groupId}
+    </update>
+
+    <select id="queryList" resultType="com.redspider.pss.vo.team.PssGroupTeamQueryVO">
+        <include refid="groupTempJoinNum"></include>
+        select
+           <include refid="queryParam"></include>
+        ,IFNULL(pgt.min_team_size, 0) 'needNum',
+        IFNULL(cjp.count_join_num, 0) 'currentJoinNum'
+         from pss_group_team pgt
+         left join user_basic ub on ub.id = pgt.creator_id
+         left join count_join_persion cjp on cjp.group_id = pgt.id
+         where pgt.deleted=0
+         <if test="queryParam.releaseStatus!=null and queryParam.releaseStatus!='' ">
+            and pgt.release_status=#{queryParam.releaseStatus}
+         </if>
+         <if test="queryParam.userId!=null and queryParam.userId!=''">
+            and pgt.creator_id=#{queryParam.userId}
+         </if>
+         <if test="queryParam.keyWord!=null and queryParam.keyWord!=''">
+            and (pgt.title like concat('%', #{queryParam.keyWord,jdbcType=VARCHAR}, '%') or pgt.introduce like concat('%', #{queryParam.keyWord,jdbcType=VARCHAR}, '%'))
+         </if>
+         order by pgt.examine_time desc
+  </select>
+
+
+  <select id="involveGroups" resultType="com.redspider.pss.vo.team.PssGroupTeamQueryVO">
+    SELECT
+        <include refid="queryParam"></include>
+    FROM pss_group_team pgt
+    INNER JOIN pss_group_team_user pgtu on pgt.id = pgtu.group_team_id
+    INNER JOIN user_basic ub on pgtu.user_id = ub.id
+    WHERE
+        pgt.deleted=0
+        AND pgt.release_status = #{queryParam.releaseStatus}
+        AND pgtu.user_id = #{queryParam.userId}
+        AND pgtu.deleted = 0
+        AND pgtu.status != 2
+    ORDER by pgtu.create_time DESC
+  </select>
+
+  <select id="involveUserCount" resultType="com.redspider.pss.dto.team.InvolveUserDTO">
+    select
+        pgtu.group_team_id AS groupTeamId,
+        count(user_id) AS currentJoinNum
+    from pss_group_team_user pgtu
+    where 1 = 1
+      <if test="teamIdList != null">
+        and pgtu.group_team_id in
+        <foreach collection="teamIdList" index="index" item="teamId" open="(" separator="," close=")">
+          #{teamId}
+        </foreach>
+      </if>
+      and pgtu.deleted = 0
+      and pgtu.status != 2
+    group by group_team_id
+  </select>
+
+    <select id="queryById" resultType="com.redspider.pss.vo.team.PssGroupTeamQueryVO">
+        <include refid="groupTempJoinNum"></include>
+        select
+        <include refid="queryParam"></include>
+        ,IFNULL(pgt.min_team_size, 0) 'needNum',
+        IFNULL(cjp.count_join_num, 0) 'currentJoinNum'
+        from pss_group_team pgt
+        left join  user_basic ub on pgt.creator_id = ub.id
+        left join count_join_persion cjp on cjp.group_id = pgt.id
+        where pgt.id = #{id}
+    </select>
+
+
+    <select id="queryIfDelete"  resultType="java.lang.Integer" >
+        select   deleted
+        from  pss_group_team
+        where  id= #{id}
+    </select>
+
+    <select id="groupTeamDetails" resultType="com.redspider.pss.vo.team.PssGroupTeamDetailsVO" >
+        <include refid="groupTempJoinNum"></include>
+        select
+        <include refid="queryParam"></include>
+        ,IFNULL(pgt.min_team_size, 0) 'needNum',
+        IFNULL(cjp.count_join_num, 0) 'currentJoinNum'
+        from pss_group_team pgt
+        left join  user_basic ub on pgt.creator_id = ub.id
+        left join count_join_persion cjp on cjp.group_id = pgt.id
+        where pgt.id = #{id}
+    </select>
+
+    <select id="groupTeamLabels" resultType="java.lang.String" >
+        select distinct pl.label_name
+
+        from pss_group_team_lable pgt
+        left join label pl
+        on pgt.label_id = pl.id
+        where pgt.group_team_id = #{id}
+    </select>
+    <select id="queryCurrentTeamNumbers" resultType="java.lang.Integer" >
+        select  count(distinct user_id) number
+        from
+            pss_group_team_user
+        where group_team_id=#{id}
+    </select>
+
+    <!-- 根据标签和关键字进行搜索 -->
+    <select id="searchByKeyword" resultType="com.redspider.pss.vo.team.PssGroupTeamQueryVO">
+        select pss.* from (
+            select group_team_id, count(0) lnum from pss_group_team_lable
+            where deleted = 0 and label_id in
+            <foreach collection="labelIds" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+            group by group_team_id having lnum = #{size}
+        ) tmp
+        left join (
+            <include refid="groupTempJoinNum"></include>
+            select
+            <include refid="queryParam"></include>
+            ,IFNULL(pgt.min_team_size, 0) 'needNum',
+            IFNULL(cjp.count_join_num, 0) 'currentJoinNum'
+            from pss_group_team pgt
+            left join user_basic ub on ub.id = pgt.creator_id
+            left join count_join_persion cjp on cjp.group_id = pgt.id
+            where pgt.deleted=0
+            <if test="keyword!=null and keyword!=''">
+                and (pgt.title like concat('%', #{keyword}, '%') or pgt.introduce like concat('%', #{keyword}, '%'))
+            </if>
+        ) pss on tmp.group_team_id = pss.id
+        where pss.id is not null
+        order by pss.examineTime desc
+    </select>
+    <select id="viewedGroups" resultType="com.redspider.pss.vo.team.PssGroupTeamQueryVO">
+        SELECT
+        <include refid="queryParam"></include>
+        FROM pss_group_team pgt
+        INNER JOIN pss_group_team_viewed pgtv on pgt.id = pgtv.group_team_id
+        INNER JOIN user_basic ub on pgtv.user_id = ub.id
+        WHERE
+        pgt.deleted=0
+        AND pgtv.user_id = #{queryParam.userId}
+        AND pgtv.deleted = 0
+        ORDER by pgtv.create_time DESC
+    </select>
+
+    <select id="viewedGroupIds" parameterType="long" resultType="long">
+    SELECT
+        pgt.id
+    FROM pss_group_team pgt
+    INNER JOIN pss_group_team_viewed pgtv on pgt.id = pgtv.group_team_id
+    INNER JOIN user_basic ub on pgtv.user_id = ub.id
+    WHERE
+    pgt.deleted=0
+    AND pgtv.user_id = #{userId}
+    AND pgtv.deleted = 0
+    ORDER by pgtv.create_time DESC
+    limit #{offset,jdbcType=TINYINT},#{pageSize,jdbcType=TINYINT}
+  </select>
+
+    <select id="queryUsersByGroupId"
+            resultType="com.redspider.pss.dto.user.AttendUserDTO">
+        select
+            DISTINCT u.id,
+            u.name,
+            u.phone,
+            u.wechat_num,
+            u.email,
+            u.slogan,
+            u.birthday,
+            u.sex,
+            u.avatar,
+            u.create_time,
+            u.update_time,
+            pgtu.type
+        from user_basic u
+            right join pss_group_team_user pgtu on u.id = pgtu.user_id
+        where pgtu.status != 2 and pgtu.group_team_id = #{groupId}
+    </select>
+  <select id="queryByLabel" resultType="com.redspider.pss.domain.PssGroupTeamQueryDO">
+    SELECT
+    <include refid="queryParam"></include>
+    FROM pss_group_team pgt
+    INNER JOIN user_basic ub on pgt.creator_id = ub.id
+    join pss_group_team_lable l on l.group_team_id=pgt.id
+    WHERE
+    pgt.deleted=0
+    AND l.label_id=#{labelId}
+    ORDER by pgt.create_time DESC
+  </select>
+</mapper>

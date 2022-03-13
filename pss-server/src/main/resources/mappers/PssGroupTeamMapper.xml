@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.PssGroupTeamMapper">
+  <resultMap id="BaseResultMap" type="com.redspider.pss.repository.db.entity.PssGroupTeam">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="picture_url" jdbcType="VARCHAR" property="pictureUrl" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="examine_time" jdbcType="TIMESTAMP" property="examineTime" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="min_team_size" jdbcType="INTEGER" property="minTeamSize" />
+    <result column="max_team_size" jdbcType="INTEGER" property="maxTeamSize" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="place" jdbcType="VARCHAR" property="place" />
+    <result column="lon" jdbcType="VARCHAR" property="lon" />
+    <result column="lat" jdbcType="VARCHAR" property="lat" />
+    <result column="contain_me" jdbcType="INTEGER" property="containMe" />
+    <result column="release_status" jdbcType="INTEGER" property="releaseStatus" />
+    <result column="team_status" jdbcType="INTEGER" property="teamStatus" />
+    <result column="confirm_status" jdbcType="INTEGER" property="confirmStatus" />
+    <result column="examine_type" jdbcType="INTEGER" property="examineType" />
+    <result column="examine_user" jdbcType="VARCHAR" property="examineUser" />
+    <result column="examine_status" jdbcType="INTEGER" property="examineStatus" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="examine_msg" jdbcType="VARCHAR" property="examineMsg" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="updater_id" jdbcType="BIGINT" property="updaterId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, picture_url, introduce, examine_time, expire_time, min_team_size, max_team_size, 
+    province, city, area, place, lon, lat, contain_me, release_status, team_status, confirm_status, 
+    examine_type, examine_user, examine_status, start_time, examine_msg, creator_id, 
+    updater_id, create_time, update_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pss_group_team
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pss_group_team
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeam">
+    insert into pss_group_team (id, title, picture_url, 
+      introduce, examine_time, expire_time, 
+      min_team_size, max_team_size, province, 
+      city, area, place, 
+      lon, lat, contain_me, 
+      release_status, team_status, confirm_status, 
+      examine_type, examine_user, examine_status, 
+      start_time, examine_msg, creator_id, 
+      updater_id, create_time, update_time, 
+      deleted)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{pictureUrl,jdbcType=VARCHAR}, 
+      #{introduce,jdbcType=VARCHAR}, #{examineTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP}, 
+      #{minTeamSize,jdbcType=INTEGER}, #{maxTeamSize,jdbcType=INTEGER}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{place,jdbcType=VARCHAR}, 
+      #{lon,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR}, #{containMe,jdbcType=INTEGER}, 
+      #{releaseStatus,jdbcType=INTEGER}, #{teamStatus,jdbcType=INTEGER}, #{confirmStatus,jdbcType=INTEGER}, 
+      #{examineType,jdbcType=INTEGER}, #{examineUser,jdbcType=VARCHAR}, #{examineStatus,jdbcType=INTEGER}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{examineMsg,jdbcType=VARCHAR}, #{creatorId,jdbcType=BIGINT}, 
+      #{updaterId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeam">
+    insert into pss_group_team
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="pictureUrl != null">
+        picture_url,
+      </if>
+      <if test="introduce != null">
+        introduce,
+      </if>
+      <if test="examineTime != null">
+        examine_time,
+      </if>
+      <if test="expireTime != null">
+        expire_time,
+      </if>
+      <if test="minTeamSize != null">
+        min_team_size,
+      </if>
+      <if test="maxTeamSize != null">
+        max_team_size,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="place != null">
+        place,
+      </if>
+      <if test="lon != null">
+        lon,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="containMe != null">
+        contain_me,
+      </if>
+      <if test="releaseStatus != null">
+        release_status,
+      </if>
+      <if test="teamStatus != null">
+        team_status,
+      </if>
+      <if test="confirmStatus != null">
+        confirm_status,
+      </if>
+      <if test="examineType != null">
+        examine_type,
+      </if>
+      <if test="examineUser != null">
+        examine_user,
+      </if>
+      <if test="examineStatus != null">
+        examine_status,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="examineMsg != null">
+        examine_msg,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="updaterId != null">
+        updater_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null">
+        #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="examineTime != null">
+        #{examineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="minTeamSize != null">
+        #{minTeamSize,jdbcType=INTEGER},
+      </if>
+      <if test="maxTeamSize != null">
+        #{maxTeamSize,jdbcType=INTEGER},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="place != null">
+        #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        #{lon,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="containMe != null">
+        #{containMe,jdbcType=INTEGER},
+      </if>
+      <if test="releaseStatus != null">
+        #{releaseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="teamStatus != null">
+        #{teamStatus,jdbcType=INTEGER},
+      </if>
+      <if test="confirmStatus != null">
+        #{confirmStatus,jdbcType=INTEGER},
+      </if>
+      <if test="examineType != null">
+        #{examineType,jdbcType=INTEGER},
+      </if>
+      <if test="examineUser != null">
+        #{examineUser,jdbcType=VARCHAR},
+      </if>
+      <if test="examineStatus != null">
+        #{examineStatus,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="examineMsg != null">
+        #{examineMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="updaterId != null">
+        #{updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeam">
+    update pss_group_team
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null">
+        picture_url = #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="examineTime != null">
+        examine_time = #{examineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="minTeamSize != null">
+        min_team_size = #{minTeamSize,jdbcType=INTEGER},
+      </if>
+      <if test="maxTeamSize != null">
+        max_team_size = #{maxTeamSize,jdbcType=INTEGER},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="place != null">
+        place = #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        lon = #{lon,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="containMe != null">
+        contain_me = #{containMe,jdbcType=INTEGER},
+      </if>
+      <if test="releaseStatus != null">
+        release_status = #{releaseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="teamStatus != null">
+        team_status = #{teamStatus,jdbcType=INTEGER},
+      </if>
+      <if test="confirmStatus != null">
+        confirm_status = #{confirmStatus,jdbcType=INTEGER},
+      </if>
+      <if test="examineType != null">
+        examine_type = #{examineType,jdbcType=INTEGER},
+      </if>
+      <if test="examineUser != null">
+        examine_user = #{examineUser,jdbcType=VARCHAR},
+      </if>
+      <if test="examineStatus != null">
+        examine_status = #{examineStatus,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="examineMsg != null">
+        examine_msg = #{examineMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="updaterId != null">
+        updater_id = #{updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.redspider.pss.repository.db.entity.PssGroupTeam">
+    update pss_group_team
+    set title = #{title,jdbcType=VARCHAR},
+      picture_url = #{pictureUrl,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      examine_time = #{examineTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      min_team_size = #{minTeamSize,jdbcType=INTEGER},
+      max_team_size = #{maxTeamSize,jdbcType=INTEGER},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      place = #{place,jdbcType=VARCHAR},
+      lon = #{lon,jdbcType=VARCHAR},
+      lat = #{lat,jdbcType=VARCHAR},
+      contain_me = #{containMe,jdbcType=INTEGER},
+      release_status = #{releaseStatus,jdbcType=INTEGER},
+      team_status = #{teamStatus,jdbcType=INTEGER},
+      confirm_status = #{confirmStatus,jdbcType=INTEGER},
+      examine_type = #{examineType,jdbcType=INTEGER},
+      examine_user = #{examineUser,jdbcType=VARCHAR},
+      examine_status = #{examineStatus,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      examine_msg = #{examineMsg,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      updater_id = #{updaterId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

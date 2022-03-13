@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+
+<!--
+    自动生成do、mapper与mapper.xml
+    新表生成时请添加<table/>标签
+    ！！注意，由于使用mybatis-generator生成代码时，开启了覆盖功能，所以不能在生成的文件中做修改！切记！！
+    示例demo
+-->
+<!--            table demo
+<table tableName="test_table_generator"
+       enableSelectByExample="false"
+       enableCountByExample="false"
+       enableDeleteByExample="false"
+       enableUpdateByExample="false">
+&lt;!&ndash;    false：不使用真实字段名，转用驼峰命名   &ndash;&gt;
+    <property name="useActualColumnNames" value="false"/>
+&lt;!&ndash;    个位长度的int值会被自动转为boolean，这里保持指定保持原样，如果有其他转换不正确的配置也这么改 &ndash;&gt;
+    <columnOverride column="sex" javaType="Integer"/>
+</table>
+-->
+<generatorConfiguration>
+
+    <properties resource="application-pro.properties"/>
+
+    <context id="default" targetRuntime="MyBatis3">
+
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        <!--        防止xml重写-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+
+
+
+        <!-- optional，旨在创建class时，对注释进行控制 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+            <property name="javaFileEncoding" value="UTF-8"/>
+        </commentGenerator>
+
+        <!--jdbc的数据库连接，直接写死也可以 -->
+        <jdbcConnection
+                driverClass="${spring.datasource.driver-class-name}"
+                connectionURL="${spring.datasource.url}"
+                userId="${spring.datasource.username}"
+                password="${spring.datasource.password}"
+            >
+        </jdbcConnection>
+
+        <!--
+            true：使用BigDecimal对应DECIMAL和 NUMERIC数据类型
+            false：默认,
+                scale>0;length>18：使用BigDecimal;
+                scale=0;length[10,18]：使用Long；
+                scale=0;length[5,9]：使用Integer；
+                scale=0;length<5：使用Short；
+         -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.redspider.pss.repository.db.entity" targetProject="src/main/java">
+            <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否对model添加 构造函数 -->
+            <property name="constructorBased" value="false"/>
+            <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+            <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="false"/>
+
+            <property name="searchString" value="Mapper$" />
+            <property name="replaceString" value="Do" />
+        </javaModelGenerator>
+
+        <!--mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
+        <sqlMapGenerator targetPackage="mappers" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- targetPackage：mapper接口dao生成的位置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.redspider.pss.mapper" targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!-- tables -->
+        <table tableName="address"
+               enableSelectByExample="false"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="audit" enableSelectByExample="false" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="pss_group_team" enableSelectByExample="false" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="picture_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="introduce" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="deleted" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+        </table>
+        <table tableName="pss_group_team_lable" enableSelectByExample="false" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="deleted" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+        </table>
+        <table tableName="pss_group_team_search_history" enableSelectByExample="false" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="deleted" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+        </table>
+        <table tableName="pss_group_team_user" enableSelectByExample="false" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="deleted" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+            <columnOverride column="type" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+        </table>
+        <table tableName="pss_group_team_viewed"  enableSelectByExample="false" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="deleted" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+        </table>
+        <table tableName="pss_label" enableSelectByExample="false" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="deleted" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+        </table>
+        <table tableName="group" enableSelectByExample="false" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="user_basic" enableSelectByExample="false" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="sex" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+        </table>
+        <table tableName="user_expand" enableSelectByExample="false" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="user_group" enableSelectByExample="false" enableCountByExample="false" enableDeleteByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="user_contact_information"
+               enableSelectByExample="false"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+    </context>
+</generatorConfiguration>

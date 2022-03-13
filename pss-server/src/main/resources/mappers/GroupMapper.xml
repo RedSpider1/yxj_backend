@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redspider.pss.mapper.GroupMapper">
+  <resultMap id="BaseResultMap" type="com.redspider.pss.repository.db.entity.Group">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_type" jdbcType="VARCHAR" property="bizType" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="condition" jdbcType="VARCHAR" property="condition" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="anonymous" jdbcType="TINYINT" property="anonymous" />
+    <result column="contain_me" jdbcType="TINYINT" property="containMe" />
+    <result column="resource" jdbcType="VARCHAR" property="resource" />
+    <result column="owner_id" jdbcType="BIGINT" property="ownerId" />
+    <result column="audit_id" jdbcType="BIGINT" property="auditId" />
+    <result column="address_id" jdbcType="BIGINT" property="addressId" />
+    <result column="label_ids" jdbcType="VARCHAR" property="labelIds" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, biz_type, title, introduction, `condition`, `status`, start_time, end_time, anonymous, contain_me,
+    resource, owner_id, audit_id, address_id, label_ids, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `group`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from `group`
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.redspider.pss.repository.db.entity.Group">
+    insert into `group` (id, biz_type, title,
+      introduction, `condition`, status,
+      start_time, end_time, anonymous, contain_me,
+      resource, owner_id, audit_id, 
+      address_id, label_ids, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{bizType,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=VARCHAR}, #{condition,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{anonymous,jdbcType=TINYINT}, #{containMe,jdbcType=TINYINT},
+      #{resource,jdbcType=VARCHAR}, #{ownerId,jdbcType=BIGINT}, #{auditId,jdbcType=BIGINT}, 
+      #{addressId,jdbcType=BIGINT}, #{labelIds,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.redspider.pss.repository.db.entity.Group"
+    useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    insert into `group`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bizType != null">
+        biz_type,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+      <if test="condition != null">
+        `condition`,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="anonymous != null">
+        anonymous,
+      </if>
+      <if test="containMe != null">
+        contain_me,
+      </if>
+      <if test="resource != null">
+        resource,
+      </if>
+      <if test="ownerId != null">
+        owner_id,
+      </if>
+      <if test="auditId != null">
+        audit_id,
+      </if>
+      <if test="addressId != null">
+        address_id,
+      </if>
+      <if test="labelIds != null">
+        label_ids,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bizType != null">
+        #{bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="condition != null">
+        #{condition,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="anonymous != null">
+        #{anonymous,jdbcType=TINYINT},
+      </if>
+      <if test="containMe != null">
+        #{containMe,jdbcType=TINYINT},
+      </if>
+      <if test="resource != null">
+        #{resource,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="auditId != null">
+        #{auditId,jdbcType=BIGINT},
+      </if>
+      <if test="addressId != null">
+        #{addressId,jdbcType=BIGINT},
+      </if>
+      <if test="labelIds != null">
+        #{labelIds,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.redspider.pss.repository.db.entity.Group">
+    update `group`
+    <set>
+      <if test="bizType != null">
+        biz_type = #{bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="condition != null">
+        `condition` = #{condition,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="anonymous != null">
+        anonymous = #{anonymous,jdbcType=TINYINT},
+      </if>
+      <if test="containMe != null">
+        contain_me = #{containMe,jdbcType=TINYINT},
+      </if>
+      <if test="resource != null">
+        resource = #{resource,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        owner_id = #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="auditId != null">
+        audit_id = #{auditId,jdbcType=BIGINT},
+      </if>
+      <if test="addressId != null">
+        address_id = #{addressId,jdbcType=BIGINT},
+      </if>
+      <if test="labelIds != null">
+        label_ids = #{labelIds,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.redspider.pss.repository.db.entity.Group">
+    update `group`
+    set biz_type = #{bizType,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      `condition` = #{condition,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      anonymous = #{anonymous,jdbcType=TINYINT},
+        contain_me = #{containMe,jdbcType=TINYINT},
+      resource = #{resource,jdbcType=VARCHAR},
+      owner_id = #{ownerId,jdbcType=BIGINT},
+      audit_id = #{auditId,jdbcType=BIGINT},
+      address_id = #{addressId,jdbcType=BIGINT},
+      label_ids = #{labelIds,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="list" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `group`
+    where 1=1
+    <if test="keyWord!=null and keyWord!=''">
+      and (title like concat('%', #{keyWord,jdbcType=VARCHAR}, '%')
+      or introduction like concat('%', #{keyWord,jdbcType=VARCHAR}, '%'))
+    </if>
+    order by update_time desc
+    limit #{offset,jdbcType=TINYINT},#{pageSize,jdbcType=TINYINT}
+  </select>
+
+  <select id="groupsByLabelId" parameterType="java.lang.Long" resultType="long">
+    select
+        `group_team_id`
+    from `pss_group_team_lable`
+    where label_id = #{labelId}
+    order by update_time desc
+    limit #{offset},#{pageSize}
+  </select>
+
+  <select id="groupIdsByOwnerId" parameterType="java.lang.Long" resultType="long">
+    select
+        `id`
+    from `group`
+    where owner_id = #{ownerId}
+    order by update_time desc
+    limit #{offset},#{pageSize}
+  </select>
+
+  <select id="groupsByStatus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `group`
+    where status in
+    <foreach collection="statusS" item="status" open="(" separator="," close=")">
+      #{status}
+    </foreach>
+  </select>
+  <select id="selectViewedGroupIdsByUserId" resultType="java.lang.Long">
+    select group_team_id
+    from (select distinct group_team_id, max(create_time) as max_create_time
+          from pss_group_team_viewed
+          where user_id = #{userId}
+          group by group_team_id) a
+    order by max_create_time desc
+      limit #{offset},#{pageSize}
+  </select>
+
+
+</mapper>
