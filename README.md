@@ -1,4 +1,31 @@
-# 开发规范
+## 简介
+本仓库为”友小聚“后端仓库，基于Java开发。
+
+## 主要框架或依赖
+- SpringBoot
+- MyBatis
+- SpringSecurity
+- MySQL
+- Redis
+
+## 相关配置修改
+需要自己修改：
+1. db相关配置
+2. redis相关配置
+3. 七牛云相关配置
+4. 微信小程序相关配置
+
+相关配置文件均在 pss-server/src/main/resources目录下
+
+## 前端服务
+前端服务基于微信小程序开发，地址：[RedSpider1/yxj_frontend](https://github.com/RedSpider1/yxj_frontkend)
+
+## 公众号
+
+欢迎关注微信公众号“编了个程”
+![公众号](https://file.yasinshaw.com/202004/20/E432D8F2EA04.jpg)
+
+## 开发规范
 开发过程需要遵守以下规范，请仔细阅读。
 <br/>
 1. 代码规范
