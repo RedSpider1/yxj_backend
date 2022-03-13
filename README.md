@@ -1,5 +1,7 @@
 ## 简介
 本仓库为”友小聚“后端仓库，基于Java开发。
+核心功能截图：
+![](https://file.yasinshaw.com/202203/13/1E1A3F8B054B.jpg)
 
 ## 主要框架或依赖
 - SpringBoot
