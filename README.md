@@ -15,6 +15,7 @@
 - holy468@live.com
 - nametxy@163.com
 - yasinshaw@gmail.com
+- goldensword22@163.com
 
 ## 主要框架或依赖
 - SpringBoot
