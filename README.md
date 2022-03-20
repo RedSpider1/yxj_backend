@@ -16,6 +16,7 @@
 - nametxy@163.com
 - yasinshaw@gmail.com
 - goldensword22@163.com
+- 651792960@qq.com
 
 ## 主要框架或依赖
 - SpringBoot
