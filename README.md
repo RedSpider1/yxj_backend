@@ -3,6 +3,19 @@
 核心功能截图：
 ![](https://file.yasinshaw.com/202203/13/1E1A3F8B054B.jpg)
 
+## 贡献者
+由于仓库里有秘钥等信息，所以删除了提交记录。特此说明一下本仓库是由以下贡献者共同开发，排名不分先后：
+
+- 15735044435@163.com
+- justrightnow@sina.com
+- qbhinsist@gmail.com
+- kyrenbo@163.com
+- lucyvictor@aliyun.com
+- w99949299@gmail.com
+- holy468@live.com
+- nametxy@163.com
+- yasinshaw@gmail.com
+
 ## 主要框架或依赖
 - SpringBoot
 - MyBatis
